@@ -1,0 +1,54 @@
+﻿$def with(restaurant_name, restaurant_id, dish_info, order_info, error_msg)
+
+<body>
+<h1>$restaurant_name的菜单</h1>
+<script type="text/javascript">
+$for msg in error_msg :
+    alert("$msg");
+</script>
+
+<table width="500" border="1">
+<tr align="left">
+  <th>菜单名</th>
+  <th>菜单价格</th>
+  <th>菜单备注</th>
+</tr>
+$for item in dish_info:
+    <tr align="left">
+	  <td><a href="booking?dish_id=$item.id&price=$item.price&restaurant_id=$item.restaurant_id&restaurant_name=$restaurant_name&action=0">$item.dish_name</a></td>
+      <td>$item.price</td>
+	  <td>$item.note</td>
+    </tr>
+</table>
+</br>
+<form method="post">
+  <p>菜单名: <input type="text" name="dish_name" /></p>
+  <p>菜单价格: <input type="text" name="dish_price" /></p>
+  <p>菜单备注: <input type="text" name="dish_note" /></p>
+  <p><input type="hidden" name="restaurant_name" value="$restaurant_name" /></p>
+  <p><input type="hidden" name="restaurant_id" value="$restaurant_id"/></p>
+  <input type="submit" value="添加菜单" />
+</form>
+
+</br>
+<h1>已点菜单</h1>
+<table width="500" border="1">
+<tr align="left">
+  <th>饭店名称</th>
+  <th>菜单名</th>
+  <th>菜单价格</th>
+  <th>菜单备注</th>
+  <th>下单时间</th>
+  <th>删除订单</th>
+</tr>
+$for item in order_info:
+    <tr align="left">
+	  <td>$item.restaurant_name</td>
+	  <td>$item.dish_name</td>
+      <td>$item.price</td>
+	  <td>$item.note</td>
+	  <td>$item.time</td>
+	  <td><a href="booking?action=1&booking_id=$item.booking_id&restaurant_name=$item.restaurant_name&restaurant_id=$item.restaurant_id">删除订单</a></td>
+    </tr>
+</table>
+</body>
