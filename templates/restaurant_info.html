@@ -1,0 +1,26 @@
+﻿$def with(restaurant_info)
+
+<body>
+<h1>餐厅信息</h1>
+
+<table width="500" border="1">
+<tr align="left">
+  <th>餐厅名字</th>
+  <th>餐厅电话</th>
+  <th>餐厅备注</th>
+</tr>
+$for item in restaurant_info:
+    <tr align="left">
+      <td><a href="dish_info?restaurant_id=$item.id&restaurant_name=$item.name">$item.name</a></td>
+      <td>$item.phone</td>
+      <td>$item.note</td>
+    </tr>
+</table>
+</br>
+<form method="post">
+  <p>餐厅名字: <input type="text" name="restaurant_name" /></p>
+  <p>餐厅电话: <input type="text" name="restaurant_phone" /></p>
+  <p>餐厅备注: <input type="text" name="restaurant_note" /></p>
+  <input type="submit" value="添加饭店" />
+</form>
+</body>
