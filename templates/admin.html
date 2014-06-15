@@ -1,0 +1,27 @@
+﻿$def with(user_info)
+
+<body>
+<h1>管理员页面</h1>
+</br>
+</br>
+<div>
+<a href="order_commit"><h4>提交订单</h4></a>
+</br>
+<a href="personal_page"><h4>返回个人页面</h4></a>
+</br>
+</div>
+
+</br>
+<div>
+<form action="/topup" method="POST">
+<select name="user_id">  
+$for item in user_info :
+    <option value="$item.id">$item.user_name</option> 
+</select>  
+<input type="input" name="amount" >
+<input type="submit" value="充值" >
+</form>
+</div>
+
+</body>
+

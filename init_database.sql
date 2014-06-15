@@ -9,10 +9,12 @@ create table restaurant_info(
 	,note TEXT 
 	,primary key (id)
 	)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-	
+
+/*	
 insert into restaurant_info (id,name, phone,note)  values (1,'万家肠粉', '111222333444','hehe');
 insert into restaurant_info (id,name, phone,note)  values (2,'石磨坊', '110,112','hehe');
-	
+*/
+
 create table dish_info (	
 	id INT AUTO_INCREMENT
 	,restaurant_id INT NOT NULL #restaurant_info.id
@@ -21,7 +23,7 @@ create table dish_info (
 	,note TEXT 
 	,primary key (id)
 	)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
+/*	
 insert into dish_info (restaurant_id, dish_name, price)  values (1,'牛腩饭',16); 
 insert into dish_info (restaurant_id, dish_name, price)  values (1,'猪脚饭',16); 
 insert into dish_info (restaurant_id, dish_name, price)  values (1,'基友饭',16); 
@@ -29,21 +31,23 @@ insert into dish_info (restaurant_id, dish_name, price)  values (1,'基友饭',1
 insert into dish_info (restaurant_id, dish_name, price)  values (2,'牛腩饭',16); 
 insert into dish_info (restaurant_id, dish_name, price)  values (2,'猪脚饭',16); 
 insert into dish_info (restaurant_id, dish_name, price)  values (2,'基友饭',16); 
-
+*/
 	
 create table user_info (
 	id INT AUTO_INCREMENT
 	,user_name VARCHAR(50) UNIQUE
 	,password TEXT NOT NULL
-	,privilege INT
-	,balance FLOAT
+	,privilege INT DEFAULT '0'
+	,balance FLOAT DEFAULT '0'
 	,primary key (id)
 	)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-insert into user_info (user_name, password, privilege, balance)  values ('ay', '202CB962AC59075B964B07152D234B70', 1, 0);
+	
+insert into user_info (user_name, password, privilege, balance)  values ('ay', '36F9C031B9802DA453EEDFBD6222F914', 1, 0);
+/*
 insert into user_info (user_name, password, privilege, balance)  values ('ay1', '202CB962AC59075B964B07152D234B70', 0, 0);
 insert into user_info (user_name, password, privilege, balance)  values ('ay2', '202CB962AC59075B964B07152D234B70', 0, 0);
-	
+*/	
+
 create table booking_info (
 	id INT AUTO_INCREMENT
 	,dish_id INT

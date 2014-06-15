@@ -1,0 +1,20 @@
+﻿$def with (order_info)
+
+<h1>订餐详情</h1>
+<table width="500" border="1">
+<tr align="left">
+  <th>用户名</th>
+  <th>餐厅</th>
+  <th>菜品名</th>
+  <th>价格</th>
+  <th>下单时间</th>
+</tr>
+$for item in order_info:
+    <tr align="left">
+	  <td>$item.user_name</td>
+      <td>$item.dish_name</td>
+	  <td>$item.restaurant_name</td>	
+	  <td>$item.payment</td>	
+	  <td>$item.time</td>	
+    </tr>
+</table>

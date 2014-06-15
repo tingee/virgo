@@ -1,0 +1,16 @@
+﻿$def with (topup_info)
+
+<h1>用户余额</h1>
+<table width="500" border="1">
+<tr align="left">
+  <th>用户名</th>
+  <th>充值金额</th>
+  <th>充值时间</th>
+</tr>
+$for item in topup_info:
+    <tr align="left">
+	  <td>$item.user_name</td>
+      <td>$item.amount</td>
+	  <td>$item.time</td>
+    </tr>
+</table>

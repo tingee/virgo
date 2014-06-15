@@ -1,14 +1,17 @@
-$def with() 
+$def with(user_name, user_balance, privilege) 
 
-<title>个人主页</title>
+<title>$user_name的个人主页</title>
 
 <body>
-<h1>Hi  xx童鞋!</h1>
-	</br>
-	</br>
-    <a href="restaurant_info">订饭</a>
-	</br>
-	</br>
-    <a href="logout">登出</a>
+<h1>$user_name童鞋, 您的账户余额为$user_balance RMB</h1>
+$if privilege == 1 :
+    <a href="admin"><h4>管理员页面</h4></a>
+</br>
+</br>
+<a href="restaurant_info"><h4>订饭</h4></a>
+</br>
+<a href="balance"><h4>账单查询</h4></a>
+</br>
+<a href="logout"><h4>登出</h4></a>
 </body>
 

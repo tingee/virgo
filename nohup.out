@@ -1,0 +1,64 @@
+0.0 (1): SELECT * FROM user_info
+192.168.254.247:23437 - - [15/Jun/2014 23:54:48] "HTTP/1.1 GET /balance" - 200 OK
+0.0 (1): SELECT * FROM restaurant_info
+192.168.254.247:23437 - - [15/Jun/2014 23:54:51] "HTTP/1.1 GET /restaurant_info" - 200 OK
+0.0 (1): SELECT * FROM user_info
+192.168.254.247:23437 - - [15/Jun/2014 23:54:52] "HTTP/1.1 GET /admin" - 200 OK
+0.0 (1): SELECT * FROM user_info
+192.168.254.247:23437 - - [15/Jun/2014 23:54:55] "HTTP/1.1 GET /admin" - 200 OK
+0.01 (1): 
+        SELECT restaurant_info.name as  restaurant_name, restaurant_info.phone as restaurant_phone,
+        dish_info.dish_name as dish_name, count(dish_info.id) as count
+        FROM restaurant_info, dish_info, booking_info
+        where booking_info.dish_id=dish_info.id
+        AND dish_info.restaurant_id=restaurant_info.id
+        AND booking_info.status=0
+        GROUP BY dish_info.id, restaurant_info.id
+        ORDER BY restaurant_info.id
+        
+0.01 (2): 
+        SELECT user_info.user_name as user_name, user_info.id as user_id 
+                    ,restaurant_info.name as restaurant_name
+                    ,dish_info.dish_name as dish_name, dish_info.price as price
+                    ,booking_info.booking_time as booking_time, booking_info.id as booking_id, booking_info.payment as payment   
+        FROM restaurant_info, dish_info, booking_info, user_info
+        where booking_info.dish_id=dish_info.id
+        AND dish_info.restaurant_id=restaurant_info.id
+        AND booking_info.user_id=user_info.id
+        AND booking_info.status=0
+        ORDER BY booking_info.booking_time
+        
+192.168.254.247:23437 - - [15/Jun/2014 23:54:56] "HTTP/1.1 GET /order_commit" - 200 OK
+0.0 (1): SELECT * FROM user_info WHERE id=1L
+192.168.254.247:23437 - - [15/Jun/2014 23:54:57] "HTTP/1.1 GET /personal_page" - 200 OK
+0.0 (1): SELECT * FROM restaurant_info
+192.168.254.247:23479 - - [15/Jun/2014 23:56:03] "HTTP/1.1 GET /restaurant_info" - 200 OK
+0.0 (1): SELECT * FROM user_info
+192.168.254.247:23484 - - [15/Jun/2014 23:56:27] "HTTP/1.1 GET /balance" - 200 OK
+0.0 (1): SELECT * FROM restaurant_info
+192.168.254.247:23484 - - [15/Jun/2014 23:56:31] "HTTP/1.1 GET /restaurant_info" - 200 OK
+0.0 (1): SELECT * FROM user_info
+192.168.254.247:23484 - - [15/Jun/2014 23:56:33] "HTTP/1.1 GET /admin" - 200 OK
+0.01 (1): 
+        SELECT restaurant_info.name as  restaurant_name, restaurant_info.phone as restaurant_phone,
+        dish_info.dish_name as dish_name, count(dish_info.id) as count
+        FROM restaurant_info, dish_info, booking_info
+        where booking_info.dish_id=dish_info.id
+        AND dish_info.restaurant_id=restaurant_info.id
+        AND booking_info.status=0
+        GROUP BY dish_info.id, restaurant_info.id
+        ORDER BY restaurant_info.id
+        
+0.01 (2): 
+        SELECT user_info.user_name as user_name, user_info.id as user_id 
+                    ,restaurant_info.name as restaurant_name
+                    ,dish_info.dish_name as dish_name, dish_info.price as price
+                    ,booking_info.booking_time as booking_time, booking_info.id as booking_id, booking_info.payment as payment   
+        FROM restaurant_info, dish_info, booking_info, user_info
+        where booking_info.dish_id=dish_info.id
+        AND dish_info.restaurant_id=restaurant_info.id
+        AND booking_info.user_id=user_info.id
+        AND booking_info.status=0
+        ORDER BY booking_info.booking_time
+        
+192.168.254.247:23484 - - [15/Jun/2014 23:56:34] "HTTP/1.1 GET /order_commit" - 200 OK
