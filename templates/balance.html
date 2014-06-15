@@ -1,0 +1,25 @@
+﻿$def with(user_info)
+
+<h1>用户余额</h1>
+<table width="600" border="1">
+<tr align="left">
+  <th>用户名</th>
+  <th>余额</th>
+  <th>用户组</th>
+  <th>订餐记录</th>
+  <th>充值记录</th>
+</tr>
+$for item in user_info:
+    <tr align="left">
+	  <td>$item.user_name</td>
+      <td>$item.balance</td>
+	$if int(item.privilege) is 0 :
+		<td>普通用户</td>
+	$elif int(item.privilege) is 1 :
+		<td>管理员</td>
+	$else:
+		<td>未知用户组</td>	
+	  <td><a href="order_details?user_id=$item.id"><h4>点我^0^</h4></a></td>	
+	  <td><a href="topup_details?user_id=$item.id"><h4>点我^_^</h4></a></td>	
+    </tr>
+</table>
