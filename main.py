@@ -329,7 +329,10 @@ class balance:
     def GET(self):
         check_login()
         results = db.select('user_info')
-        return render.balance( results )
+        
+        balance1 = db.query("select sum(balance) as total_money  from user_info" )
+        balance2 = db.query("select sum(transaction_amount) as total_money from transaction_journal" )
+        return render.balance( results, balance1, balance2 )
     
 class order_commit:
     def GET(self):
@@ -351,7 +354,7 @@ class order_commit:
         elif input.get('disable_booking') :
             web.config.booking_status = False    
         elif input.get('commit_order') :
-            self.commit_order()
+            self.commit_order_safe()
         else :
             return render.msg("invalid operation!", "order_commit")
     
@@ -400,6 +403,20 @@ class order_commit:
         effect_rows = db.update('booking_info', where='status=0', status=1 )
         print "effect_rows="+str(effect_rows)     
 
+    def commit_order_safe(self):
+        print "safely commiting oders !"
+        transaction = db.transaction()
+        
+        try :
+            self.commit_order()
+        except :
+            transaction.rollback()
+            return False
+        else :
+            transaction.commit()
+            
+        return True
+        
                 
 '''
 function 
