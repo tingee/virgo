@@ -1,12 +1,33 @@
 ﻿$def with(restaurant_name, restaurant_id, dish_info, order_info, error_msg)
 
 <body>
+<h1>已点菜单</h1>
+<table width="500" border="1">
+<tr align="left">
+  <th>饭店名称</th>
+  <th>菜单名</th>
+  <th>菜单价格</th>
+  <th>菜单备注</th>
+  <th>下单时间</th>
+  <th>删除订单</th>
+</tr>
+$for item in order_info:
+    <tr align="left">
+	  <td>$item.restaurant_name</td>
+	  <td>$item.dish_name</td>
+      <td>$item.price</td>
+	  <td>$item.note</td>
+	  <td>$item.time</td>
+	  <td><a href="booking?action=1&booking_id=$item.booking_id&restaurant_name=$item.restaurant_name&restaurant_id=$item.restaurant_id">删除订单</a></td>
+    </tr>
+</table>
+</br>
+
 <h1>$restaurant_name的菜单</h1>
 <script type="text/javascript">
 $for msg in error_msg :
     alert("$msg");
 </script>
-
 <table width="500" border="1">
 <tr align="left">
   <th>菜单名</th>
@@ -30,25 +51,4 @@ $for item in dish_info:
   <input type="submit" value="添加菜单" />
 </form>
 
-</br>
-<h1>已点菜单</h1>
-<table width="500" border="1">
-<tr align="left">
-  <th>饭店名称</th>
-  <th>菜单名</th>
-  <th>菜单价格</th>
-  <th>菜单备注</th>
-  <th>下单时间</th>
-  <th>删除订单</th>
-</tr>
-$for item in order_info:
-    <tr align="left">
-	  <td>$item.restaurant_name</td>
-	  <td>$item.dish_name</td>
-      <td>$item.price</td>
-	  <td>$item.note</td>
-	  <td>$item.time</td>
-	  <td><a href="booking?action=1&booking_id=$item.booking_id&restaurant_name=$item.restaurant_name&restaurant_id=$item.restaurant_id">删除订单</a></td>
-    </tr>
-</table>
 </body>

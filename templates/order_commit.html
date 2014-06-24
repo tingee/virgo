@@ -41,6 +41,7 @@ $for item in order_summary:
   <th>价格</th>
   <th>下单时间</th>
 </tr>
+$ total_amount=0
 $for item in order_detail:
     <tr align="left">
 	  <td>$item.user_name</td>
@@ -48,5 +49,9 @@ $for item in order_detail:
       <td>$item.dish_name</td>
 	  <td>$item.price</td>
 	  <td>$item.booking_time</td>
+	  $ total_amount+=float(item.price)
     </tr>
+<tr align="left">
+总金额:$total_amount
+</tr>	
 </table>

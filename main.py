@@ -302,7 +302,7 @@ class topup :
         input = web.input()
         user_id = web.net.websafe(input.user_id) 
         amount = float(web.net.websafe(input.amount) ) 
-        amount = abs(amount)
+        #amount = abs(amount)
         
         self.topup_money(user_id, amount)
         
@@ -354,6 +354,7 @@ class order_commit:
         elif input.get('disable_booking') :
             web.config.booking_status = False    
         elif input.get('commit_order') :
+            web.config.booking_status = False
             self.commit_order_safe()
         else :
             return render.msg("invalid operation!", "order_commit")
