@@ -12,7 +12,7 @@
   <th>删除订单</th>
 </tr>
 $for item in order_info:
-    <tr align="left">
+    <tr align="left"> 
 	  <td>$item.restaurant_name</td>
 	  <td>$item.dish_name</td>
       <td>$item.price</td>
@@ -30,15 +30,27 @@ $for msg in error_msg :
 </script>
 <table width="500" border="1">
 <tr align="left">
+  <th>菜单ID</th>
   <th>菜单名</th>
   <th>菜单价格</th>
   <th>菜单备注</th>
+  <th>删除菜单</th>
 </tr>
 $for item in dish_info:
     <tr align="left">
+	  <td>$item.id</td>
 	  <td><a href="booking?dish_id=$item.id&price=$item.price&restaurant_id=$item.restaurant_id&restaurant_name=$restaurant_name&action=0">$item.dish_name</a></td>
       <td>$item.price</td>
 	  <td>$item.note</td>
+	  <td>
+		<form method="post">
+		  <p><input type="submit" value="删除菜单" /></p>
+		  <p><input type="hidden" name="dish_id" value="$item.id" /></p>
+		  <p><input type="hidden" name="delete" value="1" /></p>
+		  <p><input type="hidden" name="restaurant_name" value="$restaurant_name" /></p>
+		  <p><input type="hidden" name="restaurant_id" value="$restaurant_id"/></p>
+		</form>
+	  </td>
     </tr>
 </table>
 </br>
@@ -50,5 +62,4 @@ $for item in dish_info:
   <p><input type="hidden" name="restaurant_id" value="$restaurant_id"/></p>
   <input type="submit" value="添加菜单" />
 </form>
-
 </body>
