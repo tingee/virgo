@@ -1,0 +1,96 @@
+$def with( user_info, restaurant_info )
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{页面的标题，显示在浏览器的窗口标题里}</title>
+    <link rel="stylesheet" href="./static/css/dinner.css"/>
+</head>
+<body>
+<div class="header">
+    <div class="header_inner">
+        <h1 class="logo">LOGO<span>（自行脑补一枚logo吧）</span></h1>
+        <div class="personal_msg">
+            <p class="personal">
+                欢迎 <strong>$user_info.user_name</strong>！
+            </p>
+            <p class="balance">
+                您的余额：￥
+                <strong>$user_info.balance</strong>
+            </p>
+            <p class="buttons">
+                <a href="admin">管理员页面</a>
+                <a href="order_details?user_id=$user_info.id">订餐记录</a>
+                <a href="topup_details?user_id=$user_info.id">充值记录</a>
+                <a href="logout">登出</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="main clearfix">
+
+
+<!--以上是公共的头部，每个页面都先引用-->
+
+
+
+    <div class="crumbs">
+        <a href="/">首页</a>
+        &gt;
+        <span>餐馆列表</span>
+    </div>
+
+    <div class="restaurants clearfix">
+
+        <!-- 餐馆列表 -->
+
+        <!-- 餐馆1 -->
+	$for item in restaurant_info:		
+        <a href="dish_v1?restaurant_id=$item.id&restaurant_name=$item.name" class="restaurant ab_button">
+            <h3 class="restaurant_name">$item.name</h3>
+            <p class="restaurant_phone">$item.phone</p>
+            <p class="restaurant_note">$item.note</p>
+        </a>
+        <!-- 更多餐馆 -->
+
+<div class="add_restaurant ab_button_bg">
+	<form method="post">
+		<h3>
+			<label for="add_restaurant_name">餐厅名字: </label>
+			<input type="text" id="add_restaurant_name" name="restaurant_name" placeholder="餐厅名字" />
+		</h3>
+		<p>
+			<label for="add_restaurant_phone">餐厅电话: </label>
+			<input type="text" id="add_restaurant_phone" name="restaurant_phone" placeholder="餐厅电话" />
+		</p>
+		<p>
+			<label for="add_restaurant_note">餐厅备注: </label>
+			<input type="text" id="add_restaurant_note" name="restaurant_note" placeholder="餐厅备注" />
+		</p>
+		<button type="submit" class="ab_button">添加<br>餐厅</button>
+	</form>
+</div>
+
+</div>
+
+
+
+<!--下面是公共的脚部，每个页面都在最后引用一下-->
+
+
+</div>
+
+<div class="footer">
+    <div class="footer_inner">
+        <p>
+            &copy;BDExpert生活&情感管理委员会
+        </p>
+		<p>
+			委员会IT小二: aylin, benzliang
+		</p>
+    </div>
+</div>
+
+</body>
+</html>
