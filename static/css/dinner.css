@@ -1,0 +1,384 @@
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,
+form,fieldset,input,textarea,button,p,blockquote,th,td {
+    padding: 0;
+    margin: 0;
+}
+ol,ul {
+    list-style: none;
+}
+body {
+    font-family: Tahoma,"微软雅黑",sans-serif;
+    font-size: 16px;
+}
+a {
+    text-decoration: none;
+    color: #3272c1;
+}
+a:hover {
+    text-decoration: underline;
+}
+.clearfix:after {
+    content:".";
+    display:block;
+    height:0;
+    clear:both;
+    visibility:hidden;
+}
+.ab_button, .ab_button_bg {
+    background-color: #f5f5f5;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#f5f5f5),to(#f1f1f1));
+    background-image: -webkit-linear-gradient(top,#f5f5f5,#f1f1f1);
+    background-image: linear-gradient(top,#f5f5f5,#f1f1f1);
+    border: 1px solid #dcdcdc;
+    color: #444;
+}
+
+.ab_button:hover {
+    background-color: #f8f8f8;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#f8f8f8),to(#f1f1f1));
+    background-image: -webkit-linear-gradient(top,#f8f8f8,#f1f1f1);
+    background-image: linear-gradient(top,#f8f8f8,#f1f1f1);
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
+    border: 1px solid #c6c6c6;
+    color: #222;
+    text-decoration: none;
+}
+
+.ab_button:active {
+    background-color: #f6f6f6;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#f6f6f6),to(#f1f1f1));
+    background-image: -webkit-linear-gradient(top,#f6f6f6,#f1f1f1);
+    background-image: linear-gradient(top,#f6f6f6,#f1f1f1);
+    -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.ab_button:focus {
+    border: 1px solid #4d90fe;
+    outline: none;
+}
+
+.ab_button:visited {
+    color: #555;
+}
+
+
+.header {
+    background: #f1f1f1 -webkit-gradient(radial, 100 36, 0, 100 -40, 120, from(#fafafa), to(#f1f1f1));
+    border-bottom: 1px solid #e5e5e5;
+    height: 71px;
+}
+
+.header_inner {
+    padding: 4px 20px;
+}
+
+.logo {
+    height: 60px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 45px;
+    line-height: 45px;
+    color: #1b3eda;
+    text-align: center;
+}
+
+.logo span {
+    font-size: 12px;
+    line-height: 12px;
+    font-weight: normal;
+    color: #888;
+    display: block;
+}
+
+.logo, .personal, .balance, .buttons {
+    float: left;
+    margin-right: 16px;
+}
+
+.personal_msg {
+    float: right;
+    padding-top: 38px;
+}
+
+.personal, .balance, .buttons {
+    font-size: 16px;
+    line-height: 16px;
+    vertical-align: bottom;
+}
+
+.balance strong {
+    color: #cc0000;
+}
+
+.crumbs {
+    border-bottom: 1px solid #e5e5e5;
+    height: 35px;
+    line-height: 35px;
+    padding: 0 20px;
+}
+
+.footer {
+    padding: 20px;
+    margin-top: 40px;
+    border-top: 1px solid #e5e5e5;
+    color: #888;
+}
+
+.restaurants {
+    padding: 20px;
+}
+
+.restaurant, .add_restaurant {
+    margin: 0 16px 16px 0;
+    float: left;
+    padding: 12px 20px;
+    border-radius: 4px;
+    min-width: 240px;
+    min-height: 110px;
+    display: block;
+}
+
+.restaurant h3, .restaurant p {
+    white-space: nowrap;
+}
+
+.restaurant h3 {
+    font-size: 24px;
+    line-height: 40px;
+    color: #3272c1;
+}
+
+.restaurant p {
+    line-height: 32px;
+}
+
+.add_restaurant {
+    line-height: 32px;
+    position: relative;
+}
+
+.add_restaurant label {
+    display: none;
+}
+
+.add_restaurant input[type=text] {
+    font-size: 16px;
+    border: 0;
+    padding: 5px;
+    width: 140px;
+    height: 32px;
+    line-height: 32px;
+    box-sizing: border-box;
+    font-family: Tahoma, "微软雅黑", sans-serif;
+    background-color: transparent;
+}
+
+.add_restaurant input[type=text]:hover {
+    border: 1px solid #dcdcdc;
+    padding: 4px;
+}
+
+.add_restaurant input[type=text]:focus {
+    border: 1px solid #dcdcdc;
+    padding: 4px;
+    background-color: #fff;
+}
+
+.add_restaurant h3 input[type=text] {
+    font-size: 24px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.add_restaurant button[type=submit] {
+    position: absolute;
+    width: 56px;
+    font-size: 16px;
+    height: 56px;
+    margin-top: -28px;
+    top: 50%;
+    right: 12px;
+    font-family: Tahoma, "微软雅黑", sans-serif;
+    cursor: pointer;
+}
+
+.dish_list {
+    width: 600px;
+    margin: 20px 0 0 0;
+    padding: 0 20px;
+    border-right: 1px solid #e5e5e5;
+    float: left;
+}
+
+.dish {
+    padding: 6px;
+    border-bottom: 1px dashed #e5e5e5;
+}
+
+.dish:last-child {
+    border-bottom: 0 none;
+}
+
+.dish_id, .dish_name, .dish_price, .dish_book, .dish_delete {
+    float: left;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.dish_note {
+    clear: both;
+}
+
+.dish_id {
+    width: 50px;
+    color: #888;
+    text-align: center;
+}
+
+.dish_name {
+    width: 270px;
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.dish_price {
+    width: 150px;
+}
+
+.dish_price strong {
+    color: #cc0000;
+}
+
+a.dish_book {
+    display: block;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    padding: 7px 14px;
+    margin-left: 4px;
+}
+
+button.dish_delete {
+    display: block;
+    float: right;
+    padding: 0 4px;
+    margin: 0;
+    border: 0 none;
+    background: transparent none;
+    font-size: 16px;
+    font-family: Tahoma, "微软雅黑", sans-serif;
+    visibility: hidden;
+    cursor: pointer;
+}
+
+.dish:hover button.dish_delete {
+    visibility: visible;
+}
+
+.dish_note {
+    color: #888;
+    margin: 0 160px 0 50px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.add_dish label {
+    display: none;
+}
+
+button.add_dish_submit {
+    float: left;
+    display: block;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    padding: 7px 14px;
+    margin-left: 4px;
+    font-size: 16px;
+    font-family: Tahoma, "微软雅黑", sans-serif;
+    cursor: pointer;
+}
+
+.add_dish .dish_name, .add_dish .dish_price, .add_dish .dish_note {
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.add_dish input[type=text] {
+    font-size: 16px;
+    border: 0;
+    padding: 5px;
+    width: 80%;
+    height: 32px;
+    line-height: 32px;
+    box-sizing: border-box;
+    font-family: Tahoma, "微软雅黑", sans-serif;
+    background-color: transparent;
+}
+
+.add_dish input[type=text]:hover {
+    border: 1px solid #dcdcdc;
+    padding: 4px;
+}
+
+.add_dish input[type=text]:focus {
+    border: 1px solid #dcdcdc;
+    padding: 4px;
+    background-color: #fff;
+}
+
+.booked_list {
+    width: 240px;
+    margin: 20px 0 0 -1px;
+    padding: 0 20px;
+    border-left: 1px solid #e5e5e5;
+    float: left;
+}
+
+.booked_list h2 {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.booked_dish {
+    margin-top: 20px;
+    padding: 10px 20px;
+    position: relative;
+}
+
+.booked_dish_name, .booked_dish_price, .booked_dish_restaurant, .booked_time {
+    margin-bottom: 4px;
+}
+
+.booked_dish_name {
+    font-size: 20px;
+}
+
+.booked_dish_price, .booked_time {
+    color: #888;
+}
+
+.booked_dish_price strong {
+    color: #cc0000;
+}
+
+a.dish_book_delete {
+    display: block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    line-height: 16px;
+    text-align: center;
+    top: 4px;
+    right: 4px;
+    border: 1px solid #880000;
+    background-color: #cc0000;
+    color: #fff;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+
+a.dish_book_delete:hover {
+    text-decoration: none;
+    border: 1px solid #cc0000;
+    background-color: #ff0000;
+}

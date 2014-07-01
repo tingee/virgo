@@ -1,0 +1,129 @@
+$def with( user_info, restaurant_name, restaurant_id, dish_info, order_info )
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{页面的标题，显示在浏览器的窗口标题里}</title>
+    <link rel="stylesheet" href="./static/css/dinner.css"/>
+</head>
+<body>
+<div class="header">
+    <div class="header_inner">
+        <h1 class="logo">LOGO<span>（自行脑补一枚logo吧）</span></h1>
+        <div class="personal_msg">
+            <p class="personal">
+                欢迎 <strong>$user_info.user_name</strong>！
+            </p>
+            <p class="balance">
+                您的余额：￥
+                <strong>$user_info.balance</strong>
+            </p>
+            <p class="buttons">
+                <a href="admin">管理员页面</a>
+                <a href="order_details?user_id=$user_info.id">订餐记录</a>
+                <a href="topup_details?user_id=$user_info.id">充值记录</a>
+                <a href="logout">登出</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="main clearfix">
+
+
+    <!--以上是公共的头部，每个页面都先引用-->
+
+
+
+    <div class="crumbs">
+        <a href="personal_page_v1">餐馆列表</a>
+        &gt;
+        <span>$restaurant_name</span>
+    </div>
+
+
+
+    <div class="dish_list">
+
+
+        <!-- 菜单列表 -->
+        <!-- 菜单1 -->
+$for item in dish_info:		
+        <div class="dish">
+            <div class="dish_id">$item.id</div>
+            <h3 class="dish_name"><a href="booking?dish_id=$item.id&price=$item.price&restaurant_id=$item.restaurant_id&restaurant_name=$restaurant_name&action=0&return_page=dish_v1">$item.dish_name</a></h3>
+            <div class="dish_price">￥<strong>$item.price</strong></div>
+            <a class="dish_book ab_button" href="booking?dish_id=$item.id&price=$item.price&restaurant_id=$item.restaurant_id&restaurant_name=$restaurant_name&action=0&return_page=dish_v1">订这个</a>
+            <form action="" method="post">
+                <input type="hidden" name="dish_id" value="$item.id">
+                <input type="hidden" name="delete" value="1">
+                <input type="hidden" name="restaurant_name" value="$restaurant_name">
+                <input type="hidden" name="restaurant_id" value="$restaurant_id">
+                <button type="submit" class="dish_delete" title="删除菜单">×</button>
+            </form>
+            <div class="dish_note">$item.note</div>
+        </div>
+
+
+<!-- 添加菜单 -->
+<div class="dish add_dish">
+	<form action="" method="post">
+		<div class="dish_id">+</div>
+		<h3 class="dish_name">
+			<label for="add_dish_name">菜名:</label>
+			<input type="text" name="dish_name" id="add_dish_name" placeholder="菜名">
+		</h3>
+		<div class="dish_price">
+			<label for="add_dish_price">价格:</label>
+			<input type="text" name="dish_price" id="add_dish_price" placeholder="价格">
+		</div>
+		<button type="submit" class="add_dish_submit ab_button">添加菜单</button>
+		<div class="dish_note">
+			<label for="add_dish_note">备注:</label>
+			<input type="text" name="dish_note" id="add_dish_note" placeholder="备注">
+		</div>
+	</form>
+
+</div>
+
+
+
+    </div>
+
+
+<div class="booked_list">
+
+        <h2>已点菜单</h2>
+
+        <!-- 已点菜单（购物车） -->
+        <!-- 菜单1 -->
+$for item in order_info:		
+        <div class="booked_dish ab_button_bg">
+            <h3 class="booked_dish_name">$item.dish_name</h3>
+            <div class="booked_dish_price">￥<strong>$item.price</strong></div>
+            <div class="booked_time">$item.time</div>
+            <a class="dish_book_delete" href="booking?action=1&booking_id=$item.booking_id&restaurant_name=$item.restaurant_name&restaurant_id=$item.restaurant_id&return_page=dish_v1" title="删除订单">×</a>
+        </div>
+
+</div>
+
+
+
+    <!--下面是公共的脚部，每个页面都在最后引用一下-->
+
+
+</div>
+
+<div class="footer">
+    <div class="footer_inner">
+        <p>
+            &copy;BDExpert生活&情感管理委员会
+        </p>
+		<p>
+			委员会IT小二: aylin, benzliang
+		</p>
+    </div>
+</div>
+
+</body>
+</html>
