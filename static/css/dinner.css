@@ -83,12 +83,20 @@ a:hover {
     text-align: center;
 }
 
+.logo a {
+    color: #1b3eda;
+}
+
 .logo span {
     font-size: 12px;
     line-height: 12px;
     font-weight: normal;
     color: #888;
     display: block;
+}
+
+.logo a:hover {
+    text-decoration: none;
 }
 
 .logo, .personal, .balance, .buttons {
@@ -134,13 +142,14 @@ a:hover {
     float: left;
     padding: 12px 20px;
     border-radius: 4px;
-    min-width: 240px;
-    min-height: 110px;
+    min-width: 300px;
+    min-height: 140px;
     display: block;
 }
 
 .restaurant h3, .restaurant p {
-    white-space: nowrap;
+    /*white-space: nowrap;*/
+    word-break: break-all;
 }
 
 .restaurant h3 {
