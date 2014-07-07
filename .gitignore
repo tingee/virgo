@@ -1,3 +1,6 @@
 db_backup
 sessions
 main.pyc
+nohup.out
+log
+main.pyc
