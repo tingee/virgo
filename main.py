@@ -5,11 +5,11 @@ Created on 2014年6月14日
 
 @author: ay
 '''
-import web, hashlib, datetime
+import web, hashlib, datetime, traceback
 from web import form
 
 
-db = web.database(dbn='mysql', user='root', pw='123', db='launch_booking')
+db = web.database(dbn='mysql', user='root', pw='123456', db='launch_booking')
 
 urls = (
         "/", "login"
@@ -18,14 +18,16 @@ urls = (
         , "/logout" , "logout"
         , "/restaurant_info" , "restaurant_info"
         , "/topup" , "topup"
-        , "/dish_info" , "dish_info"
+        , "/dish_info" , "dish_info_v1"
         , "/booking" , "booking"
-        , "/personal_page", "personal_page"
+        , "/personal_page", "personal_page_v1"
         , "/admin", "admin"
         , "/balance", "balance"
         , "/order_commit", "order_commit"
         , "/order_details", "order_details"
         , "/topup_details", "topup_details"
+        , "/personal_page_v1", "personal_page_v1"
+        , "/dish_v1", "dish_v1"
         )
 
 login_form = form.Form(
@@ -115,7 +117,68 @@ class personal_page:
         
         user_info = get_current_user_info()
         return render.personal_page(user_info.user_name, str(user_info.balance), user_info.privilege )
-                            
+    
+class personal_page_v1 :
+    def GET(self):
+        check_login( )
+        return render.personal_page_v1( get_current_user_info() , get_restaurant_info() )
+    
+    def POST(self):
+        check_login()
+        
+        input = web.input()
+        restaurant_name = web.net.websafe(input.restaurant_name)
+        restaurant_phone = web.net.websafe(input.restaurant_phone)        
+        restaurant_note = web.net.websafe(input.restaurant_note)
+                
+        try:
+            db.insert('restaurant_info', name=restaurant_name , phone=restaurant_phone, note=restaurant_note)
+        except:
+            return "Fail to add restaurant information, the restaurant name may conflict!"
+            
+        raise web.seeother("/personal_page_v1")
+        
+class dish_v1 :
+    def GET(self):
+        error_msg = []
+        check_login( )
+                
+        input = web.input()
+        restaurant_id = web.net.websafe(input.restaurant_id)
+        restaurant_name = web.net.websafe(input.restaurant_name)             
+           
+        dish_info = get_dish_info(restaurant_id)
+        if not dish_info :
+            error_msg.append( "cannot find dish info!" )
+         
+        return render.dish_v1( get_current_user_info() , restaurant_name, restaurant_id, dish_info,  get_user_order_info(session.user_id) )
+        
+    def POST(self):
+        check_login()
+        error_msg = []
+      
+        input = web.input()
+        restaurant_id = web.net.websafe(input.restaurant_id)
+        restaurant_name = web.net.websafe(input.restaurant_name)
+                        
+        if input.__contains__("delete") : 
+            dish_id = web.net.websafe(input.dish_id)
+            delete_flag = int(web.net.websafe(input.delete) )
+
+            if delete_flag :
+                db.delete("dish_info", where='id='+str( dish_id ) )
+        else :
+            dish_name = web.net.websafe(input.dish_name)
+            dish_price = web.net.websafe(input.dish_price)        
+            dish_note = web.net.websafe(input.dish_note)
+                    
+            try:
+                rows = db.insert('dish_info', restaurant_id=restaurant_id, dish_name=dish_name , price=float(dish_price), note=dish_note)
+            except:
+                error_msg.append( "Fail to add restaurant information, the restaurant name may conflict!" )
+        
+        raise web.seeother('dish_v1?restaurant_id=%s&restaurant_name=%s' % (restaurant_id, restaurant_name ) )         
+                                     
 class restaurant_info :
     def GET(self):
         check_login()
@@ -146,29 +209,37 @@ class dish_info :
         restaurant_id = web.net.websafe(input.restaurant_id)
         restaurant_name = web.net.websafe(input.restaurant_name)             
         #print 'restaurant_id type=' + str(type(restaurant_id))
-        
+           
         dish_info = get_dish_info(restaurant_id)
         if not dish_info :
             error_msg.append( "cannot find dish info!" )
          
-        return render.dish_info( restaurant_name, restaurant_id, dish_info,  self.get_user_order_info(session.user_id), error_msg )
+        return render.dish_info( restaurant_name, restaurant_id, dish_info,  get_user_order_info(session.user_id), error_msg )
         
     def POST(self):
         check_login()
         error_msg = []
       
-        
         input = web.input()
-        dish_name = web.net.websafe(input.dish_name)
-        dish_price = web.net.websafe(input.dish_price)        
-        dish_note = web.net.websafe(input.dish_note)
         restaurant_id = web.net.websafe(input.restaurant_id)
         restaurant_name = web.net.websafe(input.restaurant_name)
-                
-        try:
-            rows = db.insert('dish_info', restaurant_id=restaurant_id, dish_name=dish_name , price=float(dish_price), note=dish_note)
-        except:
-            error_msg.append( "Fail to add restaurant information, the restaurant name may conflict!" )
+                        
+        if input.__contains__("delete") : 
+            dish_id = web.net.websafe(input.dish_id)
+            delete_flag = int(web.net.websafe(input.delete) )
+
+            if delete_flag :
+                db.delete("dish_info", where='id='+str( dish_id ) )
+        else :
+            dish_name = web.net.websafe(input.dish_name)
+            dish_price = web.net.websafe(input.dish_price)        
+            dish_note = web.net.websafe(input.dish_note)
+
+                    
+            try:
+                rows = db.insert('dish_info', restaurant_id=restaurant_id, dish_name=dish_name , price=float(dish_price), note=dish_note)
+            except:
+                error_msg.append( "Fail to add restaurant information, the restaurant name may conflict!" )
         
         raise web.seeother('dish_info?restaurant_id=%s&restaurant_name=%s' % (restaurant_id, restaurant_name ) )
              
@@ -176,20 +247,7 @@ class dish_info :
 #        if not dish_info :
 #            error_msg.append( "cannot find dish info!" )            
 #        return render.dish_info( restaurant_name, restaurant_id, dish_info,  get_user_order_info(session.user_id), error_msg )
-    def get_user_order_info(self,user_id):
-        var = dict(user_id=user_id)
-        sqlcmd = '''
-         SELECT restaurant_info.id as restaurant_id, restaurant_info.name as restaurant_name, 
-                     dish_info.dish_name as dish_name,dish_info.price as price, dish_info.note as note,
-                     booking_info.booking_time as time, booking_info.id as booking_id
-         FROM booking_info, dish_info, restaurant_info 
-         WHERE booking_info.user_id=$user_id 
-         AND dish_info.id = booking_info.dish_id
-         AND dish_info.restaurant_id=restaurant_info.id
-         AND booking_info.status=0
-         order by booking_info.booking_time DESC
-        '''
-        return db.query(sqlcmd,var)
+
     
 class booking :
     def GET(self):
@@ -199,11 +257,15 @@ class booking :
         input = web.input()
         restaurant_id = web.net.websafe(input.restaurant_id)    
         restaurant_name = web.net.websafe(input.restaurant_name)
-        
+        return_page = 'dish_info'    
+        if input.__contains__('return_page') :
+            return_page = web.net.websafe(input.return_page)
+                    
         if web.config.booking_status == False :
-            return render.msg("the dinner booking is not available right now!" , 'dish_info?restaurant_id=%s&restaurant_name=%s' % (restaurant_id, restaurant_name ) )
+            return render.msg("the dinner booking is not available right now!" , '%s?restaurant_id=%s&restaurant_name=%s' % (return_page,restaurant_id, restaurant_name ) )
         
-        action = int( web.net.websafe(input.action) )
+        action = int(web.net.websafe(input.action) ) 
+        print "action=" + str(action) 
         if action is 0 : # means to add a booking/order
             self.add_booking(input)
         
@@ -211,9 +273,7 @@ class booking :
             if not self.cancel_booking(input) :
                 error_msg.append("cannot cancel the order! the order may have been committed or deleted!")        
         
-        restaurant_id = web.net.websafe(input.restaurant_id)    
-        restaurant_name = web.net.websafe(input.restaurant_name)    
-        raise web.seeother('dish_info?restaurant_id=%s&restaurant_name=%s' % (restaurant_id, restaurant_name ) )
+        raise web.seeother('%s?restaurant_id=%s&restaurant_name=%s' % ( return_page,restaurant_id, restaurant_name ) )
     
 #        dish_info = get_dish_info(restaurant_id)
 #        if not dish_info :
@@ -302,7 +362,7 @@ class topup :
         input = web.input()
         user_id = web.net.websafe(input.user_id) 
         amount = float(web.net.websafe(input.amount) ) 
-        amount = abs(amount)
+        #amount = abs(amount)
         
         self.topup_money(user_id, amount)
         
@@ -329,7 +389,10 @@ class balance:
     def GET(self):
         check_login()
         results = db.select('user_info')
-        return render.balance( results )
+        
+        balance1 = db.query("select sum(balance) as total_money  from user_info" )
+        balance2 = db.query("select sum(transaction_amount) as total_money from transaction_journal" )
+        return render.balance( results, balance1, balance2 )
     
 class order_commit:
     def GET(self):
@@ -351,7 +414,8 @@ class order_commit:
         elif input.get('disable_booking') :
             web.config.booking_status = False    
         elif input.get('commit_order') :
-            self.commit_order()
+            web.config.booking_status = False
+            self.commit_order_safe()
         else :
             return render.msg("invalid operation!", "order_commit")
     
@@ -400,6 +464,20 @@ class order_commit:
         effect_rows = db.update('booking_info', where='status=0', status=1 )
         print "effect_rows="+str(effect_rows)     
 
+    def commit_order_safe(self):
+        print "safely commiting oders !"
+        transaction = db.transaction()
+        
+        try :
+            self.commit_order()
+        except :
+            transaction.rollback()
+            return False
+        else :
+            transaction.commit()
+            
+        return True
+        
                 
 '''
 function 
@@ -446,9 +524,23 @@ def transaction_record(transaction_type, associate_id, user_id, amount, transact
                      , transaction_amount=amount
                      , transaction_time=transaction_time )
 
+def get_user_order_info( user_id ):
+    var = dict(user_id=user_id)
+    sqlcmd = '''
+     SELECT restaurant_info.id as restaurant_id, restaurant_info.name as restaurant_name, 
+                 dish_info.dish_name as dish_name,dish_info.price as price, dish_info.note as note,
+                 booking_info.booking_time as time, booking_info.id as booking_id
+     FROM booking_info, dish_info, restaurant_info 
+     WHERE booking_info.user_id=$user_id 
+     AND dish_info.id = booking_info.dish_id
+     AND dish_info.restaurant_id=restaurant_info.id
+     AND booking_info.status=0
+     order by booking_info.booking_time DESC
+    '''
+    return db.query(sqlcmd,var)
+
 if __name__ == "__main__":
     #web.internalerror = web.debugerror
     web.config.booking_status = False    
     app.run()
-
 
