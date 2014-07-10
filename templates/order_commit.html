@@ -13,7 +13,7 @@ $else :
 </form>
 </div>
 </br></br></br>
-
+$ total_count = 0
 <h1>订餐列表</h1>
 <table width="500" border="1">
 <tr align="left">
@@ -28,11 +28,16 @@ $for item in order_summary:
 	  <td>$item.restaurant_phone</td>
       <td>$item.dish_name</td>
       <td>$item.count</td>
+	  $ total_count += item.count
     </tr>
 </table>
+共$total_count份
+
 </br>
 </br>
 <h1>订餐详情</h1>
+
+$ total_amount = 0
 <table width="500" border="1">
 <tr align="left">
   <th>用户</th>
@@ -48,5 +53,7 @@ $for item in order_detail:
       <td>$item.dish_name</td>
 	  <td>$item.price</td>
 	  <td>$item.booking_time</td>
+	  $ total_amount += item.price
     </tr>
 </table>
+订单总额为 $total_amount
